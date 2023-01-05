@@ -1,10 +1,12 @@
-import React from "react";
+import React,{useContext} from "react";
 
 import Card from "react-bootstrap/Card";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { mainContext } from "./Main";
 
 const Display = (props) => {
-  //destructing.
-  const { flag, txt, fnt_size, fnt_color } = props;
+  //using context
+  const contextValue=useContext(mainContext);
   return (
     <div>
       <Card
@@ -12,12 +14,12 @@ const Display = (props) => {
         className="container bg-success"
         style={{
           height: "auto",
-          fontSize: `${fnt_size}px`,
-          color: `${fnt_color}`,
+          fontSize: `${contextValue.fnt_size}px`,
+          color: `${contextValue.fnt_color}`,
           fontWeight: "bold",
         }}
       >
-        <Card.Body>{flag ? txt : null}</Card.Body>
+        <Card.Body>{contextValue.flag ? contextValue.txt : null}</Card.Body>
       </Card>
     </div>
   );

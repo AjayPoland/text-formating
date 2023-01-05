@@ -1,41 +1,55 @@
-import React from "react";
+import React,{useContext} from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
 import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { mainContext } from "./Main";
 
 const styling_prop = {
   margin: " 0 5px 3px 0",
 };
 const Buttons = (props) => {
-  //destructing props
-  const { onClickHandler, fnt_ref } = props;
+  //using context
+  const contextValue=useContext(mainContext);
   return (
     <div>
       <Button
         variant="primary"
         style={styling_prop}
-        onClick={() => onClickHandler("upperCase")}
+        onClick={()=>contextValue.onClickHandler("upperCase")}
       >
         UpperCase
       </Button>
-      <Button variant="success" onClick={() => onClickHandler("lowerCase")} style={styling_prop}>
+      <Button
+        variant="success"
+        onClick={()=>contextValue.onClickHandler("lowerCase")}
+        style={styling_prop}
+      >
         LowerCase
       </Button>
 
       <Form.Control
-        ref={fnt_ref}
+        ref={contextValue.fnt_ref}
         as="input"
         type="number"
         className="sm container"
-        style={{margin:"0 5px", width: "100px", display:"inline-block"}}
+        style={{ margin: "0 5px", width: "100px", display: "inline-block" }}
         placeholder="FontSize"
       />
 
-      <Button variant="danger" onClick={() => onClickHandler("FontSize")} style={styling_prop}>
+      <Button
+        variant="danger"
+        onClick={()=>contextValue.onClickHandler("FontSize")}
+        style={styling_prop}
+      >
         Change Size
       </Button>
-      <Button variant="danger" onClick={() => onClickHandler("FontColor")} style={styling_prop}>
+      <Button
+        variant="danger"
+        onClick={()=>contextValue.onClickHandler("FontColor")}
+        style={styling_prop}
+      >
         Change Color
       </Button>
     </div>

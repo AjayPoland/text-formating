@@ -4,6 +4,10 @@ import Buttons from "./Buttons";
 import Display from "./Display";
 import TextArea from "./TextArea";
 
+//constext Hook.
+export const mainContext = React.createContext();
+//const contextProvider = mainContext.Provider;
+
 //set for font color
 const color_set = new Set();
 
@@ -50,18 +54,18 @@ const Main = () => {
         }
         break;
       case "FontSize":
-        return(font_ref.current.value !== ""
+        return font_ref.current.value !== ""
           ? flag
             ? setfnt_size(font_ref.current.value)
             : alert("No Text to Change the size!")
-          : alert("Enter the size First!"));
+          : alert("Enter the size First!");
       case "FontColor":
         //-1 is to manage the index value of array. with set's size.
-        return(flag
+        return flag
           ? index !== color_set.size - 1
             ? setindex((prev) => prev + 1)
             : setindex(0)
-          : alert("No text to Change the Color!"))
+          : alert("No text to Change the Color!");
       case "default":
         return;
     }
@@ -70,21 +74,28 @@ const Main = () => {
   //   setFlag(true);
 
   // }
+  const OnChangeHandler = (event) => {
+    setInputText(event.target.value);
+  };
   console.log(flag);
   return (
     <div>
-      <TextArea
-        value={inputText}
-        onChange={(e) => setInputText(e.target.value)}
-      />
-      <Buttons onClickHandler={onClick} fnt_ref={font_ref} />
-      <Display
-        flag={flag}
-        txt={d_text}
-        fnt_size={fnt_size}
-        fnt_color={fnt_color}
-      />
-      {/* <button onClick={demo}>log me!</button> */}
+      <mainContext.Provider
+        value={{
+          value: inputText,
+          onchange: OnChangeHandler,
+          onClickHandler: onClick,
+          flag: flag,
+          txt: d_text,
+          fnt_size: fnt_size,
+          fnt_color: fnt_color,
+          fnt_ref: font_ref,
+        }}
+      >
+        <TextArea />
+        <Buttons />
+        <Display />
+      </mainContext.Provider>
     </div>
   );
 };
